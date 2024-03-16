@@ -70,7 +70,7 @@ const headers = {
 };
 
    // Step 1: Get the latest commit SHA
-    const baseBranchData = await fetch(`https://api.github.com/repos/` + server.REPO + `/git/ref/heads/master`, { headers });
+    const baseBranchData = await fetch(`https://api.github.com/repos/` + server.REPO + `/git/ref/heads/main`, { headers });
     const baseBranchJson = await baseBranchData.json();
             console.error(baseBranchJson)
 
