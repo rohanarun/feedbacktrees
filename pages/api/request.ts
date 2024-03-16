@@ -100,6 +100,8 @@ const headers = {
         message: `Init commit on`,
         content: contentEncoded,
         branch: "feedback" + rand,
+                sha: shaLatestCommit,
+
       }),
     });
     const prData2 = await prResponse2.json();
@@ -119,7 +121,6 @@ const headers = {
     });
 
     const prData = await prResponse.json();
-                  console.error(prData)
 
     if (!prResponse.ok) {
      return new Response( `Failed to create PR: ${prData.message}` );
