@@ -1,5 +1,4 @@
-Introducing Rapid Customer-Driven Development:
-
+## Feedback Trees
 Drop this form in your website, and customers can submit feedback in parallel that instantly generates the code for the feature and triggers a pull request in your private github!
 
 This enables customers to help build the product rapidly in parallel with feedback, and developers only need to test and approve the feature requests. 
