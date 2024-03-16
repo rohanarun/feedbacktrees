@@ -17,6 +17,8 @@ const Home: NextPage = () => {
   const [input, setInput] = useState("");
   const [result, setResult] = useState<string | undefined>(undefined);
   const [receiving, setReceiving] = useState(false);
+  const [feedback, setFeedback] = useState("");
+  const [fileName, setFileName] = useState("");
 
   const start = useCallback(async () => {
     setResult("");
@@ -57,6 +59,35 @@ const Home: NextPage = () => {
 
     setReceiving(false);
   }, [input]);
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch("/api/request", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          action: "submitForm",
+          feedback,
+          fileName,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert(data.message);
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred while processing the request.");
+    }
+  };
 
   return (
     <div className="relative flex min-h-screen overflow-hidden isolate flex-col items-center justify-start py-2 bg-gray-100 text-black dark:bg-neutral-900 dark:text-gray-100">
@@ -125,6 +156,33 @@ const Home: NextPage = () => {
             <pre className="p-4 whitespace-pre-wrap">{result}</pre>
           </Card>
         ) : undefined}
+
+        <div className="mt-8">
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="feedback">Feedback:</label>
+            <br />
+            <textarea
+              id="feedback"
+              name="feedback"
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
+              required
+            ></textarea>
+            <br />
+            <label htmlFor="file-name">File Name:</label>
+            <br />
+            <input
+              type="text"
+              id="file-name"
+              name="file-name"
+              value={fileName}
+              onChange={(e) => setFileName(e.target.value)}
+              required
+            />
+            <br />
+            <button type="submit">Submit</button>
+          </form>
+        </div>
       </main>
 
       <footer className="flex h-24 w-full items-center justify-center">
