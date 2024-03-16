@@ -30,7 +30,7 @@ export default async function handler(req: NextRequest) {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer " server.OPENAI_API_KEY,
+            Authorization: "Bearer " + server.OPENAI_API_KEY,
           },
           body: JSON.stringify({
             prompt: `Regenerate the following file based on the feedback:\n\nFeedback: ${feedback}\n\nFile: ${fileContent}`,
