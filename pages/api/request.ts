@@ -84,17 +84,18 @@ export default async function handler(req: NextRequest) {
         });
       
       console.error(JSON.stringify(prResponse))
+          if (prResponse.ok) {
+          return new Response(JSON.stringify({ success: true, message: "Pull request submitted successfully!" }));
+        } else {
+          return new Response(JSON.stringify({ success: false, message: "Failed to submit pull request." }));
+        }
 } catch (error) {
       console.error("Error:", error);
             console.error(JSON.stringify(error))
 
       return new Response(JSON.stringify({ success: false, message: "An error occurred while processing the request." }));
     }
-        if (prResponse.ok) {
-          return new Response(JSON.stringify({ success: true, message: "Pull request submitted successfully!" }));
-        } else {
-          return new Response(JSON.stringify({ success: false, message: "Failed to submit pull request." }));
-        }
+    
       } else {
         return new Response(JSON.stringify({ success: false, message: "File not found in the repository." + JSON.stringify(data) }));
       }
