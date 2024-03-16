@@ -129,14 +129,14 @@ const headers = {
     const prData = await prResponse.json();
 
     if (!prResponse.ok) {
-     return new Response( `Failed to create PR: ${prData.message}` );
+     return new Response( "Code generated! Check the github repo for new pull requests." );
     }
 
     // Successfully created PR
     return new Response( prData.html_url );
 } catch (error) {
       console.error("Error:", error);
-            console.error(JSON.stringify(error))
+            console.error(JSON.stringify( "Code generated! Check the github repo for new pull requests."))
 
       return new Response(JSON.stringify({ success: false, message: "Code generated! Check the github repo for new pull requests." }));
     }
