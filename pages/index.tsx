@@ -120,31 +120,6 @@ const Home: NextPage = () => {
           </span>
         </h1>
 
-        <p className="mt-3 max-w-lg opacity-70">{client.appSummary}</p>
-
-        <Card className="p-0 overflow-hidden mt-10 w-full h-36 max-w-lg bg-blue-100/20">
-          <textarea
-            className="bg-transparent w-full h-full outline-none p-4 resize-none"
-            placeholder={client.exampleInput}
-            autoFocus
-            value={input}
-            onChange={(event) => {
-              setInput(event.currentTarget.value);
-            }}
-          />
-        </Card>
-
-        <button
-          className={classNames(
-            spaceGrotesk.className,
-            "text-white rounded-xl px-5 py-2 m-5 text-xl font-bold hover:opacity-70 transition-all duration-300 disabled:opacity-50"
-          )}
-          style={{ background: client.appThemeColor }}
-          disabled={receiving}
-          onClick={start}
-        >
-          Start
-        </button>
 
         {result !== undefined ? (
           <Card
