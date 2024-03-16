@@ -59,28 +59,26 @@ export default async function handler(req: NextRequest) {
       console.error(regeneratedContent)
 
     try {
+
+      -H "Accept: application/vnd.github+json" \
+  -H "Authorization: Bearer <YOUR-TOKEN>" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  https://api.github.com/repos/OWNER/REPO/pulls \
+  -d '{"title":"Amazing new feature","body":"Please pull these awesome changes in!","head":"octocat:new-feature","base":"master"}'
         // Submit a pull request with the updated file
         const prResponse = await fetch("https://api.github.com/repos/" + server.REPO + "/pulls", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+                'X-GitHub-Api-Version': '2022-11-28',
+Accept: "application/vnd.github+json",
             Authorization: "Bearer " + server.GITHUB_KEY,
           },
           body: JSON.stringify({
             title: "Update file based on feedback",
             body: `Feedback: ${feedback}`,
-            head: "feedback-branch",
-            base: "main",
-            changes: [
-              {
-                files: {
-                  [fileName]: {
-                    content: regeneratedContent,
-                  },
-                },
-                commit: "Update file based on feedback",
-              },
-            ],
+            head: "octocat:new-feature",
+            base: "master"
           }),
         });
       
