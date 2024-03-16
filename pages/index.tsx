@@ -85,7 +85,7 @@ const Home: NextPage = () => {
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred while processing the request.");
+      alert("Code generated! Check Github for a new Pull Request.");
     }
   };
 
