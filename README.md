@@ -35,13 +35,13 @@ APP_NAME=""
 APP_SUMMARY=""
 # Example input that shows user how to use the app.
 EXAMPLE_INPUT=""
-REPO=""
-GITHUB_KEY=""
 
 # Server side
 
 # Required, the API key got from OpenAI (https://platform.openai.com/account/api-keys)
 OPENAI_API_KEY=""
+REPO=""
+GITHUB_KEY=""
 # Optional, the agent server of OpenAI API. Use this when the offical OpenAI API server is unreachable.
 OPENAI_API_BASE_URL=""
 # Optional, the system message helps set the behavior of the assistant. (Learn more from https://platform.openai.com/docs/guides/chat/introduction)
