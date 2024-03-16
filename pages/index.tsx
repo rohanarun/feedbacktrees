@@ -116,7 +116,7 @@ const Home: NextPage = () => {
               color: client.appThemeColor,
             }}
           >
-            {client.appName}
+            Feedback Trees
           </span>
         </h1>
 
