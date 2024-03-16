@@ -75,6 +75,7 @@ const headers = {
             console.error(baseBranchJson)
 
     const shaLatestCommit = baseBranchJson.sha;
+            console.error(shaLatestCommit)
 
     // Step 2: Create a new branch from the latest commit
     const newBranchResponse = await fetch(`https://api.github.com/repos/` + server.REPO + `/git/refs`, {
