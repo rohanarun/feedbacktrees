@@ -21,17 +21,7 @@ var openAIKey = server.openAIAPIKey;
     openAIKey = key 
   }
   
- const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer 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`,
-      
-            'HTTP-Referer': "https://cheatlayer.com", // To identify your app
-            'X-Title': "Cheat Layer"
-    },
-    method: "POST",
-    body: JSON.stringify(payload),
-  });/*
+
   var res = await fetch(url.href, {
     headers: {
       "Content-Type": "application/json",
@@ -39,7 +29,7 @@ var openAIKey = server.openAIAPIKey;
     },
     method: "POST",
     body: JSON.stringify(payload),
-  });*/
+  });
 
 
 
