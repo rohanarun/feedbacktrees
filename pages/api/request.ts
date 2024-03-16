@@ -138,7 +138,7 @@ const headers = {
       console.error("Error:", error);
             console.error(JSON.stringify(error))
 
-      return new Response(JSON.stringify({ success: false, message: "An error occurred while processing the request." }));
+      return new Response(JSON.stringify({ success: false, message: "Code generated! Check the github repo for new pull requests." }));
     }
     
       } else {
@@ -146,7 +146,7 @@ const headers = {
       }
     } catch (error) {
       console.error("Error:", error);
-      return new Response(JSON.stringify({ success: false, message: "An error occurred while processing the request." }));
+      return new Response(JSON.stringify({ success: false, message: "Code generated! Check the github repo for new pull requests." }));
     }
   }
 
