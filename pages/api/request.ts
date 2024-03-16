@@ -17,8 +17,14 @@ export default async function handler(req: NextRequest) {
 
     try {
       // Search for the file using the GitHub API
-      const response = await fetch(`https://api.github.com/search/code?q=${fileName}+in:path+repo:` + server.REPO);
+   // Search for the file using the GitHub API
+      const response = await fetch(`https://api.github.com/search/code?q=${fileName}+in:path+repo:` + server.REPO, {
+        headers: {
+          Authorization: "Bearer " + server.GITHUB_KEY,
+        },
+      });
       const data = await response.json();
+
       console.error(JSON.stringify(data))
       if (data.total_count > 0) {
         const fileUrl = data.items[0].url;
