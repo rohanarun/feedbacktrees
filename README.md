@@ -1,5 +1,17 @@
+Introducing Rapid Customer-Driven Development(open source):
 
-Check this youtube video for the full tutorial and demo: https://www.youtube.com/watch?v=NGlfGRpkd0Q
+Drop this form in your website, and customers can submit feedback in parallel that instantly generates the code for the feature and triggers a pull request in your private github!
+
+This enables customers to help build the product rapidly in parallel with feedback, and developers only need to test and approve the feature requests. 
+
+
+
+The PRs are instantly generated here after you submit feedback on the form:  https://github.com/rohanarun/feedbacktrees/pulls
+
+To add it to your own project, edit the environment variables in vercel to match your github repo and add your openAI and github API keys. Then drop a link or iframe to the form anywhere on your website.  
+
+This tool was entirely generated using Cheat Layer Live Mode in ~3 hours.
+ 
 
 ## Get Started
 
@@ -26,6 +38,8 @@ APP_NAME=""
 APP_SUMMARY=""
 # Example input that shows user how to use the app.
 EXAMPLE_INPUT=""
+REPO=""
+GITHUB_KEY=""
 
 # Server side
 
