@@ -43,9 +43,13 @@ export default async function handler(req: NextRequest) {
           body: JSON.stringify({
   "model": "gpt-4-turbo-preview",
   "messages": [
+        {
+      "role": "system",
+      "content": `You are a professional html nextjs developer. Regenerate the following file based on the user feedback. Do not explain the code and only generate working nextjs code:\n\n ${fileContent}`
+    },
     {
       "role": "user",
-      "content": `Regenerate the following file based on the feedback:\n\nFeedback: ${feedback}\n\nFile: ${fileContent}`
+      "content": `${feedback}`
     }
   ],
   "temperature": 1,
