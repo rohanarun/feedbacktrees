@@ -25,8 +25,9 @@ export default async function handler(req: NextRequest) {
       });
       const data = await response.json();
       console.error(JSON.stringify(data))
-
       if (data.total_count > 0) {
+              var orig_sha = data.items[0].sha;
+
         const fileUrl = data.items[0].url;
         var FILE_PATH  = data.items[0].path;
         const fileResponse = await fetch(fileUrl);
@@ -102,6 +103,7 @@ const headers = {
         message: `Init commit on`,
         content: contentEncoded,
         branch: "feedback" + rand,
+        sha: orig_sha,
 "committer":{"name":" Rohan Arun","email":"rohanarun@gmail.com"},
       }),
     });
