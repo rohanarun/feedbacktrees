@@ -48,7 +48,6 @@ export default async function handler(req: NextRequest) {
     }
   ],
   "temperature": 1,
-  "max_tokens": 256,
   "top_p": 1,
   "frequency_penalty": 0,
   "presence_penalty": 0
@@ -94,7 +93,7 @@ const headers = {
 
     // Step 3: Update or Create a file
     const contentEncoded = Buffer.from(regeneratedContent).toString('base64');
-    await fetch(`https://api.github.com/repos/` + server.REPO + `/contents/${FILE_PATH}`, {
+    const prResponse2 = await fetch(`https://api.github.com/repos/` + server.REPO + `/contents/${FILE_PATH}`, {
       method: 'PUT',
       headers,
       body: JSON.stringify({
@@ -103,6 +102,8 @@ const headers = {
         branch: "feedback" + rand,
       }),
     });
+    const prData2 = await prResponse2.json();
+            console.error(prData2)
 
     // Step 4: Create a pull request
     const prResponse = await fetch(`https://api.github.com/repos/` + server.REPO + `/pulls`, {
@@ -118,6 +119,8 @@ const headers = {
     });
 
     const prData = await prResponse.json();
+                  console.error(prData)
+
     if (!prResponse.ok) {
      return new Response( `Failed to create PR: ${prData.message}` );
     }
