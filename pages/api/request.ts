@@ -71,6 +71,7 @@ export default async function handler(req: NextRequest) {
             sha: "master", // Replace with the desired branch to create the new branch from
           }),
         });
+      console.error(JSON.stringify(branchResponse))
 
         // Submit a pull request with the updated file
         const prResponse = await fetch("https://api.github.com/repos/" + server.REPO + "/pulls", {
