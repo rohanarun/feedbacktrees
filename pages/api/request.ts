@@ -78,11 +78,12 @@ const headers = {
             console.error(shaLatestCommit)
 
     // Step 2: Create a new branch from the latest commit
+      var rand =  Math.random() * (100000 - 1) + 1;
     const newBranchResponse = await fetch(`https://api.github.com/repos/` + server.REPO + `/git/refs`, {
       method: 'POST',
       headers,
       body: JSON.stringify({
-        ref: `refs/heads/feedback`,
+        ref: `refs/heads/feedback` + rand ,
         sha: shaLatestCommit,
       }),
     });
@@ -99,7 +100,7 @@ const headers = {
       body: JSON.stringify({
         message: `Init commit on`,
         content: contentEncoded,
-        branch: "feedback",
+        branch: "feedback" + rand,
       }),
     });
 
@@ -109,7 +110,7 @@ const headers = {
       headers,
       body: JSON.stringify({
         title: `Automated PR from Next.js for feedback`,
-        head: "feedback",
+        head: "feedback" + rand,
         base: "main",
         body: 'This is an automated pull request.',
         draft: false,
