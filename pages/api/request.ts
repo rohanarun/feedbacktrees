@@ -91,6 +91,8 @@ const headers = {
 
             console.error(baseBranchJson2)
 
+  https://api.github.com/repos/OWNER/REPO/contents/PATH \
+  -d '{"message":"my commit message","committer":{"name":"Monalisa Octocat","email":"octocat@github.com"},"content":"bXkgbmV3IGZpbGUgY29udGVudHM="}'
     // Step 3: Update or Create a file
     const contentEncoded = Buffer.from(regeneratedContent).toString('base64');
     const prResponse2 = await fetch(`https://api.github.com/repos/` + server.REPO + `/contents/${FILE_PATH}`, {
@@ -100,8 +102,7 @@ const headers = {
         message: `Init commit on`,
         content: contentEncoded,
         branch: "feedback" + rand,
-                sha: shaLatestCommit,
-
+"committer":{"name":" Rohan Arun","email":"rohanarun@gmail.com"},
       }),
     });
     const prData2 = await prResponse2.json();
