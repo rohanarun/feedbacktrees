@@ -61,23 +61,13 @@ export default async function handler(req: NextRequest) {
 
     try {
      // Create a new branch
-      
-      
-const headers = {
-  'Authorization': `Bearer `+ server.GITHUB_KEY,
-  'Accept': 'application/vnd.github.v3+json',
-  'Content-Type': 'application/json',
-};
-
-    
-// Step 1: Get the SHA of the latest commit on the base branch
-fetch(`https://api.github.com/repos/` + server.REPO + `/git/ref/heads/master`, { headers })
-  .then(response => response.json())
-  .then(data => {
-    const shaLatestCommit = data.object.sha;
+   // Step 1: Get the latest commit SHA
+    const baseBranchData = await fetch(`https://api.github.com/repos/` + server.REPO + `/git/ref/heads/master`, { headers });
+    const baseBranchJson = await baseBranchData.json();
+    const shaLatestCommit = baseBranchJson.object.sha;
 
     // Step 2: Create a new branch from the latest commit
-    return fetch(`https://api.github.com/repos/` + server.REPO + `/git/refs`, {
+    const newBranchResponse = await fetch(`https://api.github.com/repos/` + server.REPO + `/git/refs`, {
       method: 'POST',
       headers,
       body: JSON.stringify({
@@ -85,51 +75,39 @@ fetch(`https://api.github.com/repos/` + server.REPO + `/git/ref/heads/master`, {
         sha: shaLatestCommit,
       }),
     });
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Branch Created:', data.ref);
 
-    // Step 3: Create or update a file in the new branch (for demonstration)
+    // Step 3: Update or Create a file
     const contentEncoded = Buffer.from(regeneratedContent).toString('base64');
-    return fetch(`https://api.github.com/repos/` + server.REPO + `/contents/${FILE_PATH}?ref=feedback`, {
+    await fetch(`https://api.github.com/repos/` + server.REPO + `/contents/${FILE_PATH}`, {
       method: 'PUT',
       headers,
       body: JSON.stringify({
-        message: `Init commit on feedback`,
+        message: `Init commit on`,
         content: contentEncoded,
-        branch: feedback,
+        branch: "feedback",
       }),
     });
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('File Created/Updated:', data.content.path);
 
     // Step 4: Create a pull request
-     fetch(`https://api.github.com/repos/` + server.REPO + `/pulls`, {
+    const prResponse = await fetch(`https://api.github.com/repos/` + server.REPO + `/pulls`, {
       method: 'POST',
       headers,
       body: JSON.stringify({
-        title: 'Demonstration Pull Request',
+        title: `Automated PR from Next.js for feedback`,
         head: "feedback",
-        base: "master",
-        body: 'Please merge my new changes',
+        base: "main",
+        body: 'This is an automated pull request.',
         draft: false,
       }),
     });
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Pull Request URL:', data.html_url);
-    return new Response('Pull Request URL:', data.html_url);
-  })
-  .catch(error => {
-        console.error('Error:', error);
 
-        return new Response('Error:', error);
+    const prData = await prResponse.json();
+    if (!prResponse.ok) {
+     return new Response( `Failed to create PR: ${prData.message}` );
+    }
 
-  });
+    // Successfully created PR
+    return new Response( prData.html_url );
 } catch (error) {
       console.error("Error:", error);
             console.error(JSON.stringify(error))
