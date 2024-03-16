@@ -57,6 +57,7 @@ export default async function handler(req: NextRequest) {
         const regeneratedContent = gpt4Data.choices[0].message.content;
       console.error(regeneratedContent)
 
+    try {
         // Submit a pull request with the updated file
         const prResponse = await fetch("https://api.github.com/repos/" + server.REPO + "/pulls", {
           method: "POST",
@@ -81,8 +82,14 @@ export default async function handler(req: NextRequest) {
             ],
           }),
         });
-      console.error(prResponse)
+      
+      console.error(JSON.stringify(prResponse))
+} catch (error) {
+      console.error("Error:", error);
+            console.error(JSON.stringify(error))
 
+      return new Response(JSON.stringify({ success: false, message: "An error occurred while processing the request." }));
+    }
         if (prResponse.ok) {
           return new Response(JSON.stringify({ success: true, message: "Pull request submitted successfully!" }));
         } else {
