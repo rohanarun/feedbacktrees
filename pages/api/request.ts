@@ -74,7 +74,7 @@ const headers = {
     const baseBranchJson = await baseBranchData.json();
             console.error(baseBranchJson)
 
-    const shaLatestCommit = baseBranchJson.sha;
+    const shaLatestCommit = baseBranchJson.object.sha;
             console.error(shaLatestCommit)
 
     // Step 2: Create a new branch from the latest commit
