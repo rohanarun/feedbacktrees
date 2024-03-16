@@ -1,7 +1,8 @@
+```typescript
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { Preahvihear, Space_Grotesk } from "next/font/google";
+import { Preahvighhear, Space_Grotesk } from "next/font/google";
 import classNames from "classnames";
 import BackgroundGradient from "../components/background-gradient";
 import Card from "../components/card";
@@ -90,7 +91,7 @@ const Home: NextPage = () => {
   };
 
   return (
-    <div className="relative flex min-h-screen overflow-hidden isolate flex-col items-center justify-start py-2 bg-gray-100 text-black dark:bg-neutral-900 dark:text-gray-100">
+    <div className="relative flex min-h-screen overflow-hidden isolate flex-col items-center justify-start py-2 bg-black text-black dark:bg-neutral-900 dark:text-gray-100">
       <Head>
         <title>{client.appName}</title>
         <link rel="icon" href={client.appLogo} />
@@ -119,7 +120,6 @@ const Home: NextPage = () => {
             Feedback Trees
           </span>
         </h1>
-
 
         {result !== undefined ? (
           <Card
@@ -160,11 +160,10 @@ const Home: NextPage = () => {
         </div>
       </main>
 
-      <footer className="flex h-24 w-full items-center justify-center">
-      
-      </footer>
+      <footer className="flex h-24 w-full items-center justify-center"></footer>
     </div>
   );
 };
 
 export default Home;
+```
