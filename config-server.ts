@@ -4,6 +4,10 @@ const server = {
     process.env.OPENAI_API_BASE_URL,
     "https://api.openai.com"
   ),
+    OPENAI_API_KEY: required(process.env.OPENAI_API_KEY, "OPENAI_API_KEY"),
+    REPO: required(process.env.REPO, "REPO"),
+    GITHUB_KEY: required(process.env.GITHUB_KEY, "GITHUB_KEY"),
+
   systemMessage: optional(process.env.SYSTEM_MESSAGE),
   messageTemplate: optional(process.env.MESSAGE_TEMPLATE),
 };
