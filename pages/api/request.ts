@@ -32,23 +32,30 @@ export default async function handler(req: NextRequest) {
         const fileContent = await fileResponse.text();
 
         // Regenerate the file using the GPT-4 API
-        const gpt4Response = await fetch("https://api.openai.com/v1/engines/gpt-4/completions", {
+        const gpt4Response = await fetch("https://api.openai.com/v1/chat/completions", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + server.OPENAI_API_KEY,
           },
           body: JSON.stringify({
-            prompt: `Regenerate the following file based on the feedback:\n\nFeedback: ${feedback}\n\nFile: ${fileContent}`,
-            max_tokens: 2048,
-            n: 1,
-            stop: null,
-            temperature: 0.7,
-          }),
+  "model": "gpt-4-turbo-preview",
+  "messages": [
+    {
+      "role": "user",
+      "content": `Regenerate the following file based on the feedback:\n\nFeedback: ${feedback}\n\nFile: ${fileContent}`
+    }
+  ],
+  "temperature": 1,
+  "max_tokens": 256,
+  "top_p": 1,
+  "frequency_penalty": 0,
+  "presence_penalty": 0
+}),
         });
 
         const gpt4Data = await gpt4Response.json();
-        const regeneratedContent = gpt4Data.choices[0].text;
+        const regeneratedContent = gpt4Data.choices[0].message.content;
 
         // Submit a pull request with the updated file
         const prResponse = await fetch("https://api.github.com/repos/owner/repo/pulls", {
