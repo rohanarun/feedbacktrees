@@ -24,6 +24,7 @@ export default async function handler(req: NextRequest) {
         },
       });
       const data = await response.json();
+      console.error(JSON.stringify(data))
 
       if (data.total_count > 0) {
         const fileUrl = data.items[0].url;
