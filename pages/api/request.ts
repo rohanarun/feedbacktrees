@@ -61,6 +61,14 @@ export default async function handler(req: NextRequest) {
 
     try {
      // Create a new branch
+      
+      
+const headers = {
+  'Authorization': `Bearer `+ server.GITHUB_KEY,
+  'Accept': 'application/vnd.github.v3+json',
+  'Content-Type': 'application/json',
+};
+
    // Step 1: Get the latest commit SHA
     const baseBranchData = await fetch(`https://api.github.com/repos/` + server.REPO + `/git/ref/heads/master`, { headers });
     const baseBranchJson = await baseBranchData.json();
