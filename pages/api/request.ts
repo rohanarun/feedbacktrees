@@ -19,7 +19,7 @@ export default async function handler(req: NextRequest) {
       // Search for the file using the GitHub API
       const response = await fetch(`https://api.github.com/search/code?q=${fileName}+in:path+repo:` + server.REPO);
       const data = await response.json();
-
+      console.log(JSON.stringify(data))
       if (data.total_count > 0) {
         const fileUrl = data.items[0].url;
         const fileResponse = await fetch(fileUrl);
