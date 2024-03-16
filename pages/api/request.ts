@@ -28,6 +28,7 @@ export default async function handler(req: NextRequest) {
 
       if (data.total_count > 0) {
         const fileUrl = data.items[0].url;
+        var FILE_PATH  = data.items[0].path;
         const fileResponse = await fetch(fileUrl);
         const fileContent = await fileResponse.text();
 
@@ -60,42 +61,75 @@ export default async function handler(req: NextRequest) {
 
     try {
      // Create a new branch
-        const branchResponse = await fetch("https://api.github.com/repos/" + server.REPO + "/git/refs", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + server.GITHUB_KEY ,
-          },
-          body: JSON.stringify({
-            ref: "refs/heads/feedback-branch",
-            sha: "master", // Replace with the desired branch to create the new branch from
-          }),
-        });
-      console.error(JSON.stringify(branchResponse))
-
-        // Submit a pull request with the updated file
-        const prResponse = await fetch("https://api.github.com/repos/" + server.REPO + "/pulls", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-                'X-GitHub-Api-Version': '2022-11-28',
-Accept: "application/vnd.github+json",
-            Authorization: "Bearer " + server.GITHUB_KEY,
-          },
-          body: JSON.stringify({
-            title: "Update file based on feedback",
-            body: regeneratedContent,
-            head: "feedback-branch",
-            base: "master"
-          }),
-        });
       
-      console.error(JSON.stringify(prResponse))
-          if (prResponse.ok) {
-          return new Response(JSON.stringify({ success: true, message: "Pull request submitted successfully!" }));
-        } else {
-          return new Response(JSON.stringify({ success: false, message: "Failed to submit pull request." }));
-        }
+      
+const headers = {
+  'Authorization': `Bearer `+ server.GITHUB_KEY,
+  'Accept': 'application/vnd.github.v3+json',
+  'Content-Type': 'application/json',
+};
+
+    
+// Step 1: Get the SHA of the latest commit on the base branch
+fetch(`https://api.github.com/repos/` + server.REPO + `/git/ref/heads/master`, { headers })
+  .then(response => response.json())
+  .then(data => {
+    const shaLatestCommit = data.object.sha;
+
+    // Step 2: Create a new branch from the latest commit
+    return fetch(`https://api.github.com/repos/` + server.REPO + `/git/refs`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        ref: `refs/heads/feedback`,
+        sha: shaLatestCommit,
+      }),
+    });
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Branch Created:', data.ref);
+
+    // Step 3: Create or update a file in the new branch (for demonstration)
+    const contentEncoded = Buffer.from(regeneratedContent).toString('base64');
+    return fetch(`https://api.github.com/repos/` + server.REPO + `/contents/${FILE_PATH}?ref=feedback`, {
+      method: 'PUT',
+      headers,
+      body: JSON.stringify({
+        message: `Init commit on feedback`,
+        content: contentEncoded,
+        branch: feedback,
+      }),
+    });
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('File Created/Updated:', data.content.path);
+
+    // Step 4: Create a pull request
+     fetch(`https://api.github.com/repos/` + server.REPO + `/pulls`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        title: 'Demonstration Pull Request',
+        head: "feedback",
+        base: "master",
+        body: 'Please merge my new changes',
+        draft: false,
+      }),
+    });
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Pull Request URL:', data.html_url);
+    return new Response('Pull Request URL:', data.html_url);
+  })
+  .catch(error => {
+        console.error('Error:', error);
+
+        return new Response('Error:', error);
+
+  });
 } catch (error) {
       console.error("Error:", error);
             console.error(JSON.stringify(error))
