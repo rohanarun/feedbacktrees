@@ -60,7 +60,7 @@ export default async function handler(req: NextRequest) {
 
     try {
      // Create a new branch
-        const branchResponse = await fetch("https://api.github.com/repos/owner/repo/git/refs", {
+        const branchResponse = await fetch("https://api.github.com/repos/" + server.REPO + "/git/refs", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
