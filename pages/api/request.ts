@@ -61,7 +61,7 @@ export default async function handler(req: NextRequest) {
         });
 
         const gpt4Data = await gpt4Response.json();
-        const regeneratedContent = gpt4Data.choices[0].message.content;
+        const regeneratedContent = gpt4Data.choices[0].message.content.split('```').join("").split("jsx").join("").split("typescript").join("");
       console.error(regeneratedContent)
 
     try {
