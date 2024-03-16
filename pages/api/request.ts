@@ -25,7 +25,6 @@ export default async function handler(req: NextRequest) {
       });
       const data = await response.json();
 
-      console.error(JSON.stringify(data))
       if (data.total_count > 0) {
         const fileUrl = data.items[0].url;
         const fileResponse = await fetch(fileUrl);
@@ -56,9 +55,10 @@ export default async function handler(req: NextRequest) {
 
         const gpt4Data = await gpt4Response.json();
         const regeneratedContent = gpt4Data.choices[0].message.content;
+      console.error(regeneratedContent)
 
         // Submit a pull request with the updated file
-        const prResponse = await fetch("https://api.github.com/repos/owner/repo/pulls", {
+        const prResponse = await fetch("https://api.github.com/repos/" + server.REPO + "/pulls", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -81,6 +81,7 @@ export default async function handler(req: NextRequest) {
             ],
           }),
         });
+      console.error(prResponse)
 
         if (prResponse.ok) {
           return new Response(JSON.stringify({ success: true, message: "Pull request submitted successfully!" }));
