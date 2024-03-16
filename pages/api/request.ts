@@ -75,7 +75,7 @@ export default async function handler(req: NextRequest) {
           return new Response(JSON.stringify({ success: false, message: "Failed to submit pull request." }));
         }
       } else {
-        return new Response(JSON.stringify({ success: false, message: "File not found in the repository." }));
+        return new Response(JSON.stringify({ success: false, message: "File not found in the repository." + JSON.stringify(data) }));
       }
     } catch (error) {
       console.error("Error:", error);
