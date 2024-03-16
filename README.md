@@ -19,9 +19,7 @@ This tool was entirely generated using Cheat Layer Live Mode in ~3 hours.
 3) Set up environment variables by copying the variables below and editing them.
 4) Deploy your application and give Vercel a moment to complete the deployment process.
 5) Visit your web app in your web browser, and share it to your friends. 🥳
-6) Paste in new custom widgets in the public directory as .html files.
-6) Use Project Atlas to generate new custom UI designs, and paste them into the public directory for instant deploys.🥳
-
+   
 ## Setting up Environment Variables
 
 You can customize your application by using environment variables. Here are all available variables and the usages:
