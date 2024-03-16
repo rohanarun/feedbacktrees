@@ -1,4 +1,4 @@
-Introducing Rapid Customer-Driven Development(open source):
+Introducing Rapid Customer-Driven Development:
 
 Drop this form in your website, and customers can submit feedback in parallel that instantly generates the code for the feature and triggers a pull request in your private github!
 
@@ -55,20 +55,3 @@ MESSAGE_TEMPLATE=""
 
 You can edit the example file located in the root directory of this project named `.env.example`. Once you have made the necessary changes, you can then copy and paste the entire content of the file into the "Environment Variables" input field on the Vercel console.
 
-
-### Generating custom widgets
-1) Use this phrase with Project Atlas in Cheat Layer to generate custom front end UIs: 
-
-```
-generate a website with a professional looking form that contains 1 input. It submits an object {input: value} to /api/request. The result is available in the data variable as a text string. Print the result in a div. Do not use sendAjax and use fetch. Make it look fancy.
-
-```
-2) Create a new .html file in the /public directory, like test.html. Open the HTML file Cheat Layer downloads and copy/paste the HTML from that. 
-3) Click commit changes, and wait on vercel dashboard for the auto-deploy to test the new version!
-
-
-### Embedd the wiget
-1) Take the URL of the widget, and put it inside this code:
-```
-<iframe src="WIDGET_URL" width="100%"></iframe>
-```
