@@ -150,7 +150,7 @@ const Home: NextPage = () => {
               type="text"
               id="file-name"
               name="file-name"
-              value={fileName}
+              value="index.tsx"
               onChange={(e) => setFileName(e.target.value)}
               required
             />
