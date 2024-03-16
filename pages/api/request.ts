@@ -45,11 +45,11 @@ export default async function handler(req: NextRequest) {
   "messages": [
         {
       "role": "system",
-      "content": `You are a professional html nextjs developer. Regenerate the following file based on the user feedback. Do not explain the code and only generate working nextjs code:\n\n ${fileContent}`
+      "content": `You are a professional html nextjs developer. Regenerate the following file based on the user feedback. Maintain all the original functionality and only add the reqeuested change. Do not include quotes or the 'jsx' prefix and only generate the code directly. Do not explain the code and only generate working nextjs code:\n\n ${fileContent}`
     },
     {
       "role": "user",
-      "content": `${feedback}`
+      "content": `Keep all the original functionality and make this change: ${feedback}`
     }
   ],
   "temperature": 1,
