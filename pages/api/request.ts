@@ -32,6 +32,7 @@ export default async function handler(req: NextRequest) {
         var FILE_PATH  = data.items[0].path;
         const fileResponse = await fetch(fileUrl);
         const fileContent = await fileResponse.text();
+      console.error(JSON.stringify(fileContent))
 
         // Regenerate the file using the GPT-4 API
         const gpt4Response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -45,7 +46,7 @@ export default async function handler(req: NextRequest) {
   "messages": [
         {
       "role": "system",
-      "content": `You are a professional html nextjs developer. Generate the full code without placeholders. Do not remove the existing code, and rather modify this code to add the feature request from the user. Do not add any extra files and use only the imports provided. Do not remove the feedback form or break any existing functionality. Regenerate the following file based on the user feedback. Maintain all the original functionality and only add the reqeuested change. Do not include quotes or the 'jsx' prefix and only generate the code directly. Do not explain the code and only generate working nextjs code:\n\n ${fileContent}`
+      "content": `You are a professional nextjs developer. Take user feedback, and edit the following code to add the feature request. Generate the full code without placeholders. Do not remove the existing code, and rather modify this code to add the feature request from the user. Do not add any style files like  import styles from '../styles/Home.module.css'. Do not break the existing functionality. Do not add any extra files and use only the imports provided. Do not remove the feedback form or break any existing functionality. Regenerate the following file based on the user feedback. Maintain all the original functionality and only add the reqeuested change. Do not include quotes or the 'jsx' prefix and only generate the code directly. Do not explain the code and only generate working nextjs code:\n\n ${fileContent}`
     },
     {
       "role": "user",
