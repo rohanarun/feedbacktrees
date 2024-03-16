@@ -59,6 +59,18 @@ export default async function handler(req: NextRequest) {
       console.error(regeneratedContent)
 
     try {
+     // Create a new branch
+        const branchResponse = await fetch("https://api.github.com/repos/owner/repo/git/refs", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + server.GITHUB_KEY ,
+          },
+          body: JSON.stringify({
+            ref: "refs/heads/feedback-branch",
+            sha: "master", // Replace with the desired branch to create the new branch from
+          }),
+        });
 
         // Submit a pull request with the updated file
         const prResponse = await fetch("https://api.github.com/repos/" + server.REPO + "/pulls", {
@@ -72,7 +84,7 @@ Accept: "application/vnd.github+json",
           body: JSON.stringify({
             title: "Update file based on feedback",
             body: regeneratedContent,
-            head: "octocat:new-feature",
+            head: "feedback-branch",
             base: "master"
           }),
         });
