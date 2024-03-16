@@ -74,7 +74,7 @@ const headers = {
     const baseBranchJson = await baseBranchData.json();
             console.error(baseBranchJson)
 
-    const shaLatestCommit = baseBranchJson.object.sha;
+    const shaLatestCommit = baseBranchJson.sha;
 
     // Step 2: Create a new branch from the latest commit
     const newBranchResponse = await fetch(`https://api.github.com/repos/` + server.REPO + `/git/refs`, {
@@ -85,6 +85,10 @@ const headers = {
         sha: shaLatestCommit,
       }),
     });
+
+          const baseBranchJson2 = await newBranchResponse.json();
+
+            console.error(baseBranchJson2)
 
     // Step 3: Update or Create a file
     const contentEncoded = Buffer.from(regeneratedContent).toString('base64');
